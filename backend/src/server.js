@@ -11,25 +11,7 @@ connectDB();
 // Allow requests from any frontend URL
 // In production, Render sets PORT automatically
 // FRONTEND_URL env variable will hold our Vercel URL
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (mobile apps, Postman)
-    if (!origin) return callback(null, true);
-
-    const allowedOrigins = [
-      'http://localhost:5173',
-      'http://localhost:3000',
-      process.env.FRONTEND_URL, // set this on Render after deploying frontend
-    ].filter(Boolean); // remove undefined values
-
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(null, true); // allow all for now, tighten later
-    }
-  },
-  credentials: true,
-}));
+app.use( cors({ origin: [ 'http://localhost:5173', 'http://localhost:3000', process.env.FRONTEND_URL, 'https://job-app-three-rouge.vercel.app', ].filter(Boolean), credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], allowedHeaders: ['Content-Type', 'Authorization'], }) );
 
 app.use(express.json());
 
